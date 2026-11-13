@@ -8,275 +8,275 @@
 <style>
 *{box-sizing:border-box;font-family:'Segoe UI',sans-serif}
 body{margin:0;background:#fdf2f8;color:#333}
-.header{background:linear-gradient(135deg,#be185d,#db2777);color:#fff;padding:22px 18px;text-align:center;border-radius:0 0 24px 24px}
-.header h1{margin:0;font-size:22px}
-.header p{margin:6px 0 0;font-size:12px;opacity:.9}
-.card{background:#fff;margin:14px;border-radius:18px;padding:16px;box-shadow:0 4px 14px rgba(0,0,0,.06)}
+.header{background:linear-gradient(135deg,#be185d,#db2777,#f472b6);color:#fff;padding:24px 16px;text-align:center;border-radius:0 0 28px 28px}
+.header h1{margin:0;font-size:28px}
+.header p{margin:6px 0 0;font-size:12px}
+.card{background:#fff;margin:14px;border-radius:20px;padding:16px;box-shadow:0 4px 14px rgba(0,0,0,.06)}
 .badge{display:inline-block;padding:5px 10px;border-radius:20px;font-size:11px;font-weight:700}
 .badge-offline{background:#fef3c7;color:#92400e}
 .badge-online{background:#dcfce7;color:#166534}
 .badge-anemia{background:#fee2e2;color:#991b1b}
+.badge-normal{background:#dbeafe;color:#1e40af}
 input,select{width:100%;padding:12px;border:1px solid #ddd;border-radius:12px;margin:6px 0;font-size:14px}
 .btn{width:100%;padding:14px;border:none;border-radius:14px;font-size:15px;font-weight:700;cursor:pointer;margin-top:8px}
-.btn-pink{background:#be185d;color:#fff}
+.btn-pink{background:linear-gradient(135deg,#be185d,#db2777);color:#fff}
 .btn-green{background:#16a34a;color:#fff}
 .btn-blue{background:#2563eb;color:#fff}
+.btn-orange{background:#f59e0b;color:#fff}
 .btn-outline{background:#fff;color:#be185d;border:2px solid #be185d}
 .grid2{display:grid;grid-template-columns:1fr 1fr;gap:10px}
-.minum-box{border:2px dashed #f9a8d4;border-radius:14px;padding:12px;text-align:center}
-.minum-box.done{border-style:solid;background:#fdf2f8;border-color:#16a34a}
 .small{font-size:12px;color:#666}
-.progress{height:12px;background:#eee;border-radius:20px;overflow:hidden}
-.progress div{height:100%;background:#16a34a;width:0%}
+.progress{height:14px;background:#eee;border-radius:20px;overflow:hidden}
+.progress div{height:100%;background:linear-gradient(90deg,#16a34a,#22c55e);width:0%}
 .hidden{display:none}
 table{width:100%;font-size:12px;border-collapse:collapse}
 th,td{padding:8px;border-bottom:1px solid #eee;text-align:left}
 .footer{text-align:center;font-size:11px;color:#999;padding:16px}
-/* TAMBAHAN KAMERA - SIA SELIPIN DI SINI AJA */
-.btn-cam{background:#9333ea;color:#fff}
-.foto-preview{width:100%;border-radius:10px;margin-top:8px;display:none}
-.foto-kecil{width:60px;height:60px;object-fit:cover;border-radius:8px}
+#popupApresiasi{position:fixed;inset:0;background:rgba(0,0,0,.55);display:none;align-items:center;justify-content:center;z-index:999;padding:20px}
+#popupApresiasi .isi{background:#fff;border-radius:24px;padding:24px;text-align:center;max-width:360px}
+.confetti{font-size:32px;letter-spacing:4px}
 </style>
 </head>
 <body>
-
 <div class="header">
-  <div style="font-size:28px">💊</div>
-  <h1>TTD CARE</h1>
-  <p>Puskesmas Manubelon<br>Amfoang Barat Daya - Kab. Kupang</p>
-  <p style="margin-top:10px"><span class="badge badge-offline" id="statusSinyal">● MODE OFFLINE - Data Tersimpan di HP</span></p>
+<div style="font-size:52px">🤰💊</div>
+<h1>TTD CARE</h1>
+<p>Puskesmas Manubelon<br>Amfoang Barat Daya - Kab. Kupang - NTT</p>
+<p style="margin-top:10px"><span class="badge badge-offline" id="statusSinyal">● MODE OFFLINE</span></p>
 </div>
-
-<!-- LOGIN -->
 <div id="pageLogin" class="card">
-  <h2 style="margin:0">Halo, Ibu Hamil 🤰</h2>
-  <p class="small">Login dulu ya, biar data Isra tidak tertukar.</p>
-  <label>Nama Ibu Hamil</label>
-  <input id="namaIbu" placeholder="Contoh: Ibu Ani">
-  <label>Usia Kehamilan (Minggu)</label>
-  <input id="usiaHamil" type="number" placeholder="Contoh: 28">
-  <label>Kondisi Ibu</label>
-  <select id="modeIbu">
-    <option value="normal">Normal - Minum 1x Sehari (Malam)</option>
-    <option value="anemia">Anemia - Minum 2x Sehari (Pagi & Malam)</option>
-  </select>
-  <label>Jam Pengingat Pagi (Kalau Anemia)</label>
-  <input id="jamPagi" type="time" value="08:00">
-  <label>Jam Pengingat Malam</label>
-  <input id="jamMalam" type="time" value="19:00">
-  <button class="btn btn-pink" onclick="login()">MASUK & MULAI MINUM TTD →</button>
-  <p class="small" style="text-align:center">App ini bisa dibuka tanpa sinyal. Data akan terkirim otomatis saat ada WiFi Puskesmas.</p>
+<h2 style="margin:0">Halo, Ibu Hamil 🤰</h2>
+<p class="small">Isi dulu ya Bu, biar alarm menyebut nama Ibu!</p>
+<label>Nama Lengkap Ibu</label>
+<input id="namaIbu" placeholder="Contoh: Ibu Ani">
+<label>Usia Kehamilan (Minggu)</label>
+<input id="usiaHamil" type="number" placeholder="Contoh: 28">
+<label>Kondisi Ibu</label>
+<select id="modeIbu">
+<option value="normal">Normal - 1x Sehari (Malam Saja)</option>
+<option value="anemia">Anemia - 2x Sehari (Pagi & Malam)</option>
+</select>
+<label>Jam Pengingat Pagi (Khusus Anemia)</label>
+<input id="jamPagi" type="time" value="08:00">
+<label>Jam Pengingat Malam</label>
+<input id="jamMalam" type="time" value="19:00">
+<button class="btn btn-orange" onclick="tesAlarm()">🔊 TES SUARA ALARM - Klik Ini!</button>
+<p class="small" style="text-align:center">Kalau diklik, HP akan ngomong: "Waktunya minum tablet tambah darah"</p>
+<div style="background:#fef3c7;padding:10px;border-radius:12px;font-size:12px">📸 <b>Izin Foto:</b> Foto hanya untuk Bidan Puskesmas Manubelon.</div>
+<button class="btn btn-pink" onclick="login()">MASUK & MULAI MINUM TTD →</button>
 </div>
-
-<!-- DASHBOARD -->
 <div id="pageHome" class="hidden">
-  <div class="card">
-    <div style="display:flex;justify-content:space-between;align-items:center">
-      <div><b id="tampilNama">Ibu Ani</b><br><span class="small" id="tampilUsia">Usia Kehamilan 28 Minggu</span></div>
-      <span class="badge badge-anemia" id="tampilMode">ANEMIA - 2X SEHARI</span>
-    </div>
-    <div style="margin-top:12px">
-      <div style="display:flex;justify-content:space-between"><span class="small">Kepatuhan Minum TTD Bulan Ini</span><b id="persenText">0%</b></div>
-      <div class="progress"><div id="barPersen"></div></div>
-      <p class="small" id="infoPersen">0 dari 0 dosis sudah diminum</p>
-    </div>
-    <div class="grid2" style="margin-top:10px">
-      <div>Pengingat Pagi<br><b id="labelPagi">08:00</b> <a href="#" onclick="ubahJam();return false" style="font-size:11px">[Ubah]</a></div>
-      <div>Pengingat Malam<br><b id="labelMalam">19:00</b> <a href="#" onclick="ubahJam();return false" style="font-size:11px">[Ubah]</a></div>
-    </div>
-  </div>
-
-  <div class="card">
-    <h3 style="margin:0">Hari Ini - <span id="tglHariIni"></span></h3>
-    <p class="small">Klik kalau sudah minum ya Bu, jangan sampai lupa!</p>
-    <div class="grid2">
-      <div class="minum-box" id="boxPagi">
-        <div style="font-size:24px">🌅</div><b>MINUM PAGI</b><br><span class="small" id="jamPagiTampil">08:00</span><br>
-        <button class="btn btn-pink" onclick="minum('pagi')">✅ SUDAH MINUM PAGI</button>
-        <button class="btn btn-cam" onclick="bukaKamera('pagi')">📸 FOTO BUKTI MINUM PAGI</button>
-        <img id="previewPagi" class="foto-preview">
-        <div class="small" id="statusPagi">Belum minum</div>
-      </div>
-      <div class="minum-box" id="boxMalam">
-        <div style="font-size:24px">🌙</div><b>MINUM MALAM</b><br><span class="small" id="jamMalamTampil">19:00</span><br>
-        <button class="btn btn-pink" onclick="minum('malam')">✅ SUDAH MINUM MALAM</button>
-        <button class="btn btn-cam" onclick="bukaKamera('malam')">📸 FOTO BUKTI MINUM MALAM</button>
-        <img id="previewMalam" class="foto-preview">
-        <div class="small" id="statusMalam">Belum minum</div>
-      </div>
-    </div>
-    <div id="boxNormal" class="hidden" style="text-align:center;padding:10px">
-      <p>Mode Normal - Cukup minum 1x malam hari ya Bu!</p>
-    </div>
-    <input type="file" id="inputKamera" accept="image/*" capture="environment" hidden>
-  </div>
-
-  <div class="card">
-    <h3 style="margin:0">💡 Cara Minum Biar Tidak Mual</h3>
-    <ul style="font-size:13px;line-height:1.6">
-      <li>Minum pakai air jeruk / air putih, jangan pakai teh, susu, kopi</li>
-      <li>Minum sesudah makan, jangan perut kosong</li>
-      <li>Kalau mual, minum sebelum tidur malam hari</li>
-      <li>Jangan lupa makan sayur hijau + ikan + telur</li>
-    </ul>
-  </div>
-
-  <div class="card">
-    <h3 style="margin:0">📶 Sinkronisasi Data</h3>
-    <p class="small">Data di HP: <b id="jumlahBelum">0</b> belum terkirim ke Bidan. Kalau Isra sudah di Puskesmas dan ada WiFi, klik tombol di bawah.</p>
-    <button class="btn btn-blue" onclick="sinkron()">🔄 SINKRONKAN SEKARANG (Saat Ada WiFi)</button>
-    <button class="btn btn-green" onclick="downloadExcel()">⬇ DOWNLOAD LAPORAN BUAT BIDAN (Excel)</button>
-    <button class="btn btn-outline" onclick="logout()">Keluar / Ganti Ibu</button>
-  </div>
-
-  <div class="card">
-    <h3 style="margin:0">📅 Riwayat Minum</h3>
-    <table><thead><tr><th>Tanggal</th><th>Waktu</th><th>Foto</th><th>Status</th></tr></thead><tbody id="riwayatBody"></tbody></table>
-  </div>
+<div class="card">
+<div style="display:flex;justify-content:space-between">
+<div><b id="tampilNama">Ibu Ani</b><br><span class="small" id="tampilUsia"></span></div>
+<span class="badge badge-anemia" id="tampilMode"></span>
 </div>
-
-<div class="footer">TTD CARE © 2026 - Puskesmas Manubelon - Dibuat untuk Skripsi & Pelayanan Jangka Panjang<br>Oleh Isra - Kebidanan</div>
-
+<div style="margin-top:12px">
+<div style="display:flex;justify-content:space-between"><span class="small">Kepatuhan Bulan Ini</span><b id="persenText">0%</b></div>
+<div class="progress"><div id="barPersen"></div></div>
+<p class="small" id="infoPersen"></p>
+</div>
+<div class="grid2">
+<div>⏰ Pagi<br><b id="labelPagi">08:00</b> <a href="#" onclick="ubahJam();return false">[Ubah]</a></div>
+<div>🌙 Malam<br><b id="labelMalam">19:00</b> <a href="#" onclick="ubahJam();return false">[Ubah]</a></div>
+</div>
+<button class="btn btn-orange" onclick="tesAlarm()">🔊 TES ALARM SUARA</button>
+</div>
+<div class="card">
+<h3 style="margin:0">Hari Ini - <span id="tglHariIni"></span> 📸</h3>
+<label><b>1. Waktu Minum</b></label>
+<select id="pilihWaktu">
+<option value="pagi">🌅 Pagi - Sesudah Sarapan</option>
+<option value="malam">🌙 Malam - Sebelum Tidur</option>
+</select>
+<label><b>2. Foto Ibu Sambil Minum TTD</b></label>
+<input type="file" id="fotoMinum" accept="image/*" capture="user" style="border:2px dashed #be185d;background:#fdf2f8">
+<p id="statusFoto" class="small" style="text-align:center"></p>
+<label><b>3. Keluhan Setelah Minum?</b></label>
+<select id="keluhan">
+<option value="Tidak ada">Tidak ada - Aman 😊</option>
+<option value="Mual">Mual 🤢</option>
+<option value="Muntah">Muntah</option>
+<option value="Pusing">Pusing</option>
+<option value="Sembelit">Sembelit / Susah BAB</option>
+</select>
+<button class="btn btn-pink" onclick="simpanDenganFoto()">📸 SIMPAN + KIRIM BUKTI FOTO</button>
+</div>
+<div class="card">
+<h3 style="margin:0">💡 Cara Minum Biar Tidak Mual</h3>
+<ul style="font-size:13px;line-height:1.6">
+<li>Minum pakai air jeruk / air putih, jangan teh, susu, kopi</li>
+<li>Minum sesudah makan, jangan perut kosong</li>
+<li>Kalau mual, minum sebelum tidur malam hari</li>
+</ul>
+</div>
+<div class="card">
+<h3 style="margin:0">📶 Sinkronisasi</h3>
+<p class="small">Data di HP belum terkirim: <b id="jumlahBelum">0</b></p>
+<button class="btn btn-blue" onclick="sinkron()">🔄 SINKRONKAN SEKARANG (WiFi / Paket Data)</button>
+<button class="btn btn-green" onclick="downloadExcel()">⬇ DOWNLOAD LAPORAN EXCEL BUAT BIDAN</button>
+<button class="btn btn-outline" onclick="logout()">Keluar / Ganti Ibu</button>
+</div>
+<div class="card">
+<h3 style="margin:0">📅 Riwayat Minum Ibu Ini</h3>
+<table>
+<thead><tr><th>Tanggal</th><th>Jam</th><th>Waktu</th><th>Status</th></tr></thead>
+<tbody id="riwayatBody"></tbody>
+</table>
+</div>
+</div>
+<div id="popupApresiasi">
+<div class="isi">
+<div class="confetti">🎉🌸💐🎉🌸💐</div>
+<h2 style="color:#be185d;margin:10px 0">MasyaAllah Hebat!</h2>
+<p id="teksApresiasi" style="font-size:14px;line-height:1.6"></p>
+<button class="btn btn-pink" onclick="tutupPopup()">Siap, Besok Minum Lagi! 💪</button>
+</div>
+</div>
+<div class="footer">TTD CARE © 2026 - Puskesmas Manubelon<br>Oleh Isra - Kebidanan</div>
 <script>
-// LINK JEMBATAN ISRA - SUDAH SIA ISI, JANGAN DIGANTI LAGI YA!
 const GOOGLE_SHEET_URL = "https://script.google.com/macros/s/AKfycbwFHEAvSF2IheJpPFPnKzkBQ-ygrOHMUHjMd05T9wWFLdyXPLHmWUcggilEafX5quqG/exec";
-
-let data = JSON.parse(localStorage.getItem('ttdcare_data') || '[]');
 let user = JSON.parse(localStorage.getItem('ttdcare_user') || 'null');
-// TAMBAHAN KAMERA - CUMA VARIABEL INI AJA
-let fotoPagi = "";
-let fotoMalam = "";
-let kameraUntuk = "pagi";
-
+let fotoBase64 = "";
+let sudahBunyiHariIni = {};
+let audioUnlocked = false;
+function getDataKey(){
+return 'ttdcare_data_' + (user ? user.nama.toLowerCase().replace(/\s+/g,'_') : 'umum');
+}
+function getData(){
+return JSON.parse(localStorage.getItem(getDataKey()) || '[]');
+}
+function saveData(d){
+localStorage.setItem(getDataKey(), JSON.stringify(d));
+}
+document.getElementById('fotoMinum').addEventListener('change', function(e){
+let file = e.target.files[0]; if(!file) return;
+let reader = new FileReader();
+reader.onload = function(ev){
+fotoBase64 = ev.target.result;
+document.getElementById('statusFoto').innerText='✅ Foto siap!';
+};
+reader.readAsDataURL(file);
+});
+function bunyiTingTong(){
+try{
+let ctx = new (window.AudioContext || window.webkitAudioContext)();
+[0,0.4,0.8].forEach((t,i)=>{
+let o=ctx.createOscillator(), g=ctx.createGain();
+o.connect(g); g.connect(ctx.destination);
+o.frequency.value = i%2==0?880:1046; o.type='sine';
+g.gain.setValueAtTime(0.0001, ctx.currentTime+t);
+g.gain.exponentialRampToValueAtTime(0.5, ctx.currentTime+t+0.05);
+g.gain.exponentialRampToValueAtTime(0.0001, ctx.currentTime+t+0.35);
+o.start(ctx.currentTime+t); o.stop(ctx.currentTime+t+0.4);
+});
+}catch(e){}
+}
+function bicara(teks){
+if(!('speechSynthesis' in window)) return;
+window.speechSynthesis.cancel();
+let u = new SpeechSynthesisUtterance(teks);
+u.lang = 'id-ID'; u.rate = 0.95; u.pitch = 1.1;
+window.speechSynthesis.speak(u);
+}
+function tesAlarm(){
+audioUnlocked = true; bunyiTingTong();
+bicara('Waktunya minum tablet tambah darah');
+alert('Dengarkan ya Bu! HP-nya ngomong "Waktunya minum tablet tambah darah"! 🔊');
+}
+function cekAlarm(){
+if(!user) return;
+let now = new Date();
+let jamSekarang = String(now.getHours()).padStart(2,'0') + ':' + String(now.getMinutes()).padStart(2,'0');
+let key = now.toDateString() + '-' + jamSekarang;
+if(sudahBunyiHariIni[key]) return;
+if(jamSekarang === user.jamPagi || jamSekarang === user.jamMalam){
+sudahBunyiHariIni[key] = true;
+if(navigator.vibrate) navigator.vibrate([500,300,500,300,500]);
+bunyiTingTong();
+bicara('Waktunya minum tablet tambah darah');
+}
+}
+setInterval(cekAlarm, 5000);
+document.addEventListener('click', ()=>{
+if(!audioUnlocked){ audioUnlocked=true; }
+}, {once:true});
 function login(){
-  let nama=document.getElementById('namaIbu').value;
-  let usia=document.getElementById('usiaHamil').value;
-  if(!nama){alert('Isi nama dulu ya Bu');return}
-  user={nama, usia, mode:document.getElementById('modeIbu').value, jamPagi:document.getElementById('jamPagi').value, jamMalam:document.getElementById('jamMalam').value};
-  localStorage.setItem('ttdcare_user',JSON.stringify(user));
-  tampilkan();
+let nama=document.getElementById('namaIbu').value.trim();
+let usia=document.getElementById('usiaHamil').value;
+if(!nama){alert('Isi nama dulu ya Bu');return}
+user={nama, usia, mode:document.getElementById('modeIbu').value, jamPagi:document.getElementById('jamPagi').value, jamMalam:document.getElementById('jamMalam').value};
+localStorage.setItem('ttdcare_user',JSON.stringify(user));
+tampilkan();
+bicara('Selamat datang Ibu ' + nama);
 }
 function tampilkan(){
-  if(!user) return;
-  document.getElementById('pageLogin').classList.add('hidden');
-  document.getElementById('pageHome').classList.remove('hidden');
-  document.getElementById('tampilNama').innerText='Ibu '+user.nama;
-  document.getElementById('tampilUsia').innerText='Usia Kehamilan '+user.usia+' Minggu';
-  document.getElementById('tampilMode').innerText=user.mode==='anemia' ? 'ANEMIA - 2X SEHARI' : 'NORMAL - 1X SEHARI';
-  document.getElementById('labelPagi').innerText=user.jamPagi;
-  document.getElementById('labelMalam').innerText=user.jamMalam;
-  document.getElementById('jamPagiTampil').innerText=user.jamPagi;
-  document.getElementById('jamMalamTampil').innerText=user.jamMalam;
-  document.getElementById('tglHariIni').innerText=new Date().toLocaleDateString('id-ID',{day:'numeric',month:'long',year:'numeric'});
-  if(user.mode==='normal'){document.getElementById('boxPagi').style.display='none';document.getElementById('boxNormal').classList.remove('hidden')}
-  updateRiwayat();
-  cekPengingat();
+if(!user) return;
+document.getElementById('pageLogin').classList.add('hidden');
+document.getElementById('pageHome').classList.remove('hidden');
+document.getElementById('tampilNama').innerText='Ibu '+user.nama;
+document.getElementById('tampilUsia').innerText='Usia Kehamilan '+user.usia+' Minggu';
+let modeEl=document.getElementById('tampilMode');
+modeEl.innerText=user.mode==='anemia'?'ANEMIA - 2X SEHARI':'NORMAL - 1X SEHARI';
+modeEl.className='badge '+(user.mode==='anemia'?'badge-anemia':'badge-normal');
+document.getElementById('labelPagi').innerText=user.jamPagi;
+document.getElementById('labelMalam').innerText=user.jamMalam;
+document.getElementById('tglHariIni').innerText=new Date().toLocaleDateString('id-ID',{day:'numeric',month:'long',year:'numeric'});
+updateRiwayat(); cekPengingat();
 }
-// TAMBAHAN KAMERA - 2 FUNGSI INI AJA
-function bukaKamera(waktu){
-  kameraUntuk = waktu;
-  document.getElementById('inputKamera').click();
+function simpanDenganFoto(){
+let data = getData();
+let now=new Date();
+let tanggal=now.toLocaleDateString('id-ID',{day:'2-digit',month:'2-digit',year:'numeric'});
+let jam=now.toLocaleTimeString('id-ID',{hour:'2-digit',minute:'2-digit',hour12:false});
+let item={tanggal, jam, nama:user.nama, usia:user.usia, mode:user.mode, waktu:document.getElementById('pilihWaktu').value, keluhan:document.getElementById('keluhan').value, foto:fotoBase64||"Tanpa Foto", terkirim:false};
+data.push(item); saveData(data);
+fotoBase64=""; document.getElementById('fotoMinum').value=''; document.getElementById('statusFoto').innerText='';
+updateRiwayat();
+let pesan = 'Terimakasih ibu hebat dan janin yang sehat';
+document.getElementById('teksApresiasi').innerText = pesan;
+document.getElementById('popupApresiasi').style.display='flex';
+bicara(pesan);
+if(navigator.vibrate) navigator.vibrate([200,100,200]);
 }
-document.getElementById('inputKamera').addEventListener('change', function(e){
-  let file = e.target.files[0];
-  if(!file) return;
-  let reader = new FileReader();
-  reader.onload = function(){
-    let img = document.createElement('img');
-    img.src = reader.result;
-    img.onload = function(){
-      let canvas = document.createElement('canvas');
-      let max = 800;
-      let scale = Math.min(1, max / img.width);
-      canvas.width = img.width * scale;
-      canvas.height = img.height * scale;
-      canvas.getContext('2d').drawImage(img, 0, 0, canvas.width, canvas.height);
-      let kecil = canvas.toDataURL('image/jpeg', 0.7);
-      if(kameraUntuk === 'pagi'){
-        fotoPagi = kecil;
-        let p = document.getElementById('previewPagi'); p.src = kecil; p.style.display='block';
-      } else {
-        fotoMalam = kecil;
-        let p = document.getElementById('previewMalam'); p.src = kecil; p.style.display='block';
-      }
-      alert('✅ Foto bukti berhasil diambil! Sekarang klik SUDAH MINUM untuk simpan.');
-    };
-  };
-  reader.readAsDataURL(file);
-  e.target.value = '';
-});
-
-function minum(waktu){
-  let now=new Date();
-  // TAMBAHAN KAMERA - CUMA AMBIL FOTO SESUAI WAKTUNYA
-  let foto = waktu === 'pagi' ? fotoPagi : fotoMalam;
-  let item={tanggal:now.toLocaleDateString('id-ID'), waktu:waktu, jam:now.toLocaleTimeString('id-ID',{hour:'2-digit',minute:'2-digit'}), nama:user.nama, usia:user.usia, mode:user.mode, terkirim:false, foto:foto || ''};
-  data.push(item);
-  localStorage.setItem('ttdcare_data',JSON.stringify(data));
-  if(waktu==='pagi'){ fotoPagi=""; document.getElementById('previewPagi').style.display='none'; }
-  if(waktu==='malam'){ fotoMalam=""; document.getElementById('previewMalam').style.display='none'; }
-  alert('Alhamdulillah! Sudah tercatat Bu. Data tersimpan di HP, akan terkirim saat ada WiFi. Semangat ya! 💪');
-  updateRiwayat();
-}
+function tutupPopup(){ document.getElementById('popupApresiasi').style.display='none'; }
 function updateRiwayat(){
-  let tbody=document.getElementById('riwayatBody');
-  tbody.innerHTML='';
-  let belum=data.filter(d=>!d.terkirim).length;
-  document.getElementById('jumlahBelum').innerText=belum;
-  // hitung kepatuhan bulan ini - PRESENTASE KEPATUHAN ADA DI SINI YA ISRA!
-  let totalTarget = user && user.mode==='anemia' ? 60 : 30;
-  let persen = Math.min(100, Math.round(data.length/totalTarget*100));
-  document.getElementById('barPersen').style.width=persen+'%';
-  document.getElementById('persenText').innerText=persen+'%';
-  document.getElementById('infoPersen').innerText=data.length+' dosis sudah diminum bulan ini (Target: '+totalTarget+')';
-  data.slice().reverse().slice(0,10).forEach(d=>{
-    // TAMBAHAN KAMERA - CUMA TAMBAH KOLOM FOTO DI SINI
-    let fotoHtml = d.foto ? `<img src="${d.foto}" class="foto-kecil" onclick="window.open('${d.foto}')">` : '<span class="small">Tanpa Foto</span>';
-    tbody.innerHTML+=`<tr><td>${d.tanggal}</td><td>${d.waktu} - ${d.jam}</td><td>${fotoHtml}</td><td>${d.terkirim?'✅ Terkirim':'⏳ Menunggu WiFi'}</td></tr>`;
-  });
-  // status hari ini
-  let today=new Date().toLocaleDateString('id-ID');
-  let pagi=data.find(d=>d.tanggal===today && d.waktu==='pagi');
-  let malam=data.find(d=>d.tanggal===today && d.waktu==='malam');
-  if(pagi){document.getElementById('boxPagi').classList.add('done');document.getElementById('statusPagi').innerText='✅ Sudah minum jam '+pagi.jam}
-  if(malam){document.getElementById('boxMalam').classList.add('done');document.getElementById('statusMalam').innerText='✅ Sudah minum jam '+malam.jam}
+let data = getData();
+let tbody=document.getElementById('riwayatBody'); tbody.innerHTML='';
+let belum=data.filter(d=>!d.terkirim).length;
+document.getElementById('jumlahBelum').innerText=belum;
+let totalTarget=user && user.mode==='anemia'?60:30;
+let persen=Math.min(100,Math.round(data.length/totalTarget*100));
+document.getElementById('barPersen').style.width=persen+'%';
+document.getElementById('persenText').innerText=persen+'%';
+document.getElementById('infoPersen').innerText=data.length+' dosis sudah diminum (Target: '+totalTarget+') - Mode: '+user.mode;
+data.slice().reverse().slice(0,15).forEach(d=>{
+tbody.innerHTML+=`<tr><td>${d.tanggal}</td><td>${d.jam}</td><td>${d.waktu} - ${d.keluhan}</td><td>${d.terkirim?'✅ Terkirim':'⏳ Menunggu WiFi'}</td></tr>`});
 }
 function ubahJam(){
-  let p=prompt('Jam Pengingat Pagi (misal 08:00)',user.jamPagi);
-  let m=prompt('Jam Pengingat Malam (misal 19:00)',user.jamMalam);
-  if(p) user.jamPagi=p;
-  if(m) user.jamMalam=m;
-  localStorage.setItem('ttdcare_user',JSON.stringify(user));
-  tampilkan();
+let p=prompt('Jam Pagi (misal 08:00)',user.jamPagi); let m=prompt('Jam Malam (misal 19:00)',user.jamMalam);
+if(p) user.jamPagi=p; if(m) user.jamMalam=m;
+localStorage.setItem('ttdcare_user',JSON.stringify(user)); tampilkan();
 }
 function cekPengingat(){
-  let now=new Date();
-  let jam=now.getHours().toString().padStart(2,'0')+':'+now.getMinutes().toString().padStart(2,'0');
-  if(jam===user.jamPagi || jam===user.jamMalam){
-  }
-  let online=navigator.onLine;
-  document.getElementById('statusSinyal').innerText=online ? '● ONLINE - Tersambung WiFi / Sinyal' : '● MODE OFFLINE - Data Tersimpan di HP';
-  document.getElementById('statusSinyal').className='badge '+(online?'badge-online':'badge-offline');
+let online=navigator.onLine; let el=document.getElementById('statusSinyal');
+el.innerText=online?'● ONLINE - Tersambung WiFi / Paket Data':'● MODE OFFLINE - Data Tersimpan di HP'; el.className='badge '+(online?'badge-online':'badge-offline');
 }
 async function sinkron(){
-  if(!GOOGLE_SHEET_URL){alert('Mode Demo: Data sudah tersimpan di HP. Untuk kirim ke Google Sheet Bidan, Isra isi dulu link Apps Script di kode (GOOGLE_SHEET_URL). Kalau Isra di Puskesmas, klik Download Excel saja, kasih ke Bidan!');return}
-  try{
-    for(let d of data){ if(!d.terkirim){ await fetch(GOOGLE_SHEET_URL,{method:'POST',mode:'no-cors',body:JSON.stringify(d)}); d.terkirim=true; } }
-    localStorage.setItem('ttdcare_data',JSON.stringify(data));
-    alert('Berhasil! Semua data terkirim ke Bidan!');
-    updateRiwayat();
-  }catch(e){alert('Sinyal masih susah, coba lagi saat di dekat WiFi Puskesmas ya Bu!')}
+let data = getData();
+if(!GOOGLE_SHEET_URL){alert('Mode Demo: Data tersimpan di HP. Isi dulu link Apps Script di kode.');return}
+try{
+for(let d of data){ if(!d.terkirim){ await fetch(GOOGLE_SHEET_URL,{method:'POST',mode:'no-cors',body:JSON.stringify(d)}); d.terkirim=true; } }
+saveData(data); alert('Berhasil! Semua data terkirim!'); updateRiwayat();
+}catch(e){alert('Sinyal masih susah, coba lagi saat di dekat WiFi Puskesmas ya Bu!')}
 }
 function downloadExcel(){
-  let csv='Tanggal,Waktu,Jam,Nama Ibu,Usia Kehamilan,Mode\n';
-  data.forEach(d=>{csv+=`${d.tanggal},${d.waktu},${d.jam},${d.nama},${d.usia},${d.mode}\n`});
-  let blob=new Blob([csv],{type:'text/csv'});
-  let a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='Laporan-TTD-'+(user?user.nama:'Ibu')+'.csv';a.click();
+let data=getData(); let csv='Tanggal,Jam Minum,Nama Ibu,Usia Hamil,Mode,Waktu Minum,Keluhan,Status\n';
+data.forEach(d=>{csv+=`${d.tanggal},${d.jam},${d.nama},${d.usia},${d.mode},${d.waktu},${d.keluhan},${d.terkirim?'Terkirim':'Menunggu WiFi'}\n`});
+let blob=new Blob([csv],{type:'text/csv'}); let a=document.createElement('a'); a.href=URL.createObjectURL(blob); a.download='Laporan-TTD-'+(user?user.nama:'Ibu')+'.csv'; a.click();
 }
-function logout(){ if(confirm('Mau ganti ibu? Data tetap tersimpan kok!')){localStorage.removeItem('ttdcare_user');location.reload()} }
-if(user) tampilkan();
-setInterval(cekPengingat,30000);
-cekPengingat();
+function logout(){ if(confirm('Mau ganti ibu? Data tetap tersimpan kok, per ibu dipisah!')){localStorage.removeItem('ttdcare_user');location.reload()} }
+if(user) tampilkan(); setInterval(cekPengingat,30000); cekPengingat();
 </script>
 </body>
 </html>
