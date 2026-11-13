@@ -32,6 +32,10 @@ input,select{width:100%;padding:12px;border:1px solid #ddd;border-radius:12px;ma
 table{width:100%;font-size:12px;border-collapse:collapse}
 th,td{padding:8px;border-bottom:1px solid #eee;text-align:left}
 .footer{text-align:center;font-size:11px;color:#999;padding:16px}
+/* TAMBAHAN KAMERA - SIA SELIPIN DI SINI AJA */
+.btn-cam{background:#9333ea;color:#fff}
+.foto-preview{width:100%;border-radius:10px;margin-top:8px;display:none}
+.foto-kecil{width:60px;height:60px;object-fit:cover;border-radius:8px}
 </style>
 </head>
 <body>
@@ -89,17 +93,22 @@ th,td{padding:8px;border-bottom:1px solid #eee;text-align:left}
       <div class="minum-box" id="boxPagi">
         <div style="font-size:24px">🌅</div><b>MINUM PAGI</b><br><span class="small" id="jamPagiTampil">08:00</span><br>
         <button class="btn btn-pink" onclick="minum('pagi')">✅ SUDAH MINUM PAGI</button>
+        <button class="btn btn-cam" onclick="bukaKamera('pagi')">📸 FOTO BUKTI MINUM PAGI</button>
+        <img id="previewPagi" class="foto-preview">
         <div class="small" id="statusPagi">Belum minum</div>
       </div>
       <div class="minum-box" id="boxMalam">
         <div style="font-size:24px">🌙</div><b>MINUM MALAM</b><br><span class="small" id="jamMalamTampil">19:00</span><br>
         <button class="btn btn-pink" onclick="minum('malam')">✅ SUDAH MINUM MALAM</button>
+        <button class="btn btn-cam" onclick="bukaKamera('malam')">📸 FOTO BUKTI MINUM MALAM</button>
+        <img id="previewMalam" class="foto-preview">
         <div class="small" id="statusMalam">Belum minum</div>
       </div>
     </div>
     <div id="boxNormal" class="hidden" style="text-align:center;padding:10px">
       <p>Mode Normal - Cukup minum 1x malam hari ya Bu!</p>
     </div>
+    <input type="file" id="inputKamera" accept="image/*" capture="environment" hidden>
   </div>
 
   <div class="card">
@@ -122,7 +131,7 @@ th,td{padding:8px;border-bottom:1px solid #eee;text-align:left}
 
   <div class="card">
     <h3 style="margin:0">📅 Riwayat Minum</h3>
-    <table><thead><tr><th>Tanggal</th><th>Waktu</th><th>Status</th></tr></thead><tbody id="riwayatBody"></tbody></table>
+    <table><thead><tr><th>Tanggal</th><th>Waktu</th><th>Foto</th><th>Status</th></tr></thead><tbody id="riwayatBody"></tbody></table>
   </div>
 </div>
 
@@ -134,6 +143,10 @@ const GOOGLE_SHEET_URL = "https://script.google.com/macros/s/AKfycbwFHEAvSF2IheJ
 
 let data = JSON.parse(localStorage.getItem('ttdcare_data') || '[]');
 let user = JSON.parse(localStorage.getItem('ttdcare_user') || 'null');
+// TAMBAHAN KAMERA - CUMA VARIABEL INI AJA
+let fotoPagi = "";
+let fotoMalam = "";
+let kameraUntuk = "pagi";
 
 function login(){
   let nama=document.getElementById('namaIbu').value;
@@ -159,11 +172,49 @@ function tampilkan(){
   updateRiwayat();
   cekPengingat();
 }
+// TAMBAHAN KAMERA - 2 FUNGSI INI AJA
+function bukaKamera(waktu){
+  kameraUntuk = waktu;
+  document.getElementById('inputKamera').click();
+}
+document.getElementById('inputKamera').addEventListener('change', function(e){
+  let file = e.target.files[0];
+  if(!file) return;
+  let reader = new FileReader();
+  reader.onload = function(){
+    let img = document.createElement('img');
+    img.src = reader.result;
+    img.onload = function(){
+      let canvas = document.createElement('canvas');
+      let max = 800;
+      let scale = Math.min(1, max / img.width);
+      canvas.width = img.width * scale;
+      canvas.height = img.height * scale;
+      canvas.getContext('2d').drawImage(img, 0, 0, canvas.width, canvas.height);
+      let kecil = canvas.toDataURL('image/jpeg', 0.7);
+      if(kameraUntuk === 'pagi'){
+        fotoPagi = kecil;
+        let p = document.getElementById('previewPagi'); p.src = kecil; p.style.display='block';
+      } else {
+        fotoMalam = kecil;
+        let p = document.getElementById('previewMalam'); p.src = kecil; p.style.display='block';
+      }
+      alert('✅ Foto bukti berhasil diambil! Sekarang klik SUDAH MINUM untuk simpan.');
+    };
+  };
+  reader.readAsDataURL(file);
+  e.target.value = '';
+});
+
 function minum(waktu){
   let now=new Date();
-  let item={tanggal:now.toLocaleDateString('id-ID'), waktu:waktu, jam:now.toLocaleTimeString('id-ID',{hour:'2-digit',minute:'2-digit'}), nama:user.nama, usia:user.usia, mode:user.mode, terkirim:false};
+  // TAMBAHAN KAMERA - CUMA AMBIL FOTO SESUAI WAKTUNYA
+  let foto = waktu === 'pagi' ? fotoPagi : fotoMalam;
+  let item={tanggal:now.toLocaleDateString('id-ID'), waktu:waktu, jam:now.toLocaleTimeString('id-ID',{hour:'2-digit',minute:'2-digit'}), nama:user.nama, usia:user.usia, mode:user.mode, terkirim:false, foto:foto || ''};
   data.push(item);
   localStorage.setItem('ttdcare_data',JSON.stringify(data));
+  if(waktu==='pagi'){ fotoPagi=""; document.getElementById('previewPagi').style.display='none'; }
+  if(waktu==='malam'){ fotoMalam=""; document.getElementById('previewMalam').style.display='none'; }
   alert('Alhamdulillah! Sudah tercatat Bu. Data tersimpan di HP, akan terkirim saat ada WiFi. Semangat ya! 💪');
   updateRiwayat();
 }
@@ -179,7 +230,9 @@ function updateRiwayat(){
   document.getElementById('persenText').innerText=persen+'%';
   document.getElementById('infoPersen').innerText=data.length+' dosis sudah diminum bulan ini (Target: '+totalTarget+')';
   data.slice().reverse().slice(0,10).forEach(d=>{
-    tbody.innerHTML+=`<tr><td>${d.tanggal}</td><td>${d.waktu} - ${d.jam}</td><td>${d.terkirim?'✅ Terkirim':'⏳ Menunggu WiFi'}</td></tr>`;
+    // TAMBAHAN KAMERA - CUMA TAMBAH KOLOM FOTO DI SINI
+    let fotoHtml = d.foto ? `<img src="${d.foto}" class="foto-kecil" onclick="window.open('${d.foto}')">` : '<span class="small">Tanpa Foto</span>';
+    tbody.innerHTML+=`<tr><td>${d.tanggal}</td><td>${d.waktu} - ${d.jam}</td><td>${fotoHtml}</td><td>${d.terkirim?'✅ Terkirim':'⏳ Menunggu WiFi'}</td></tr>`;
   });
   // status hari ini
   let today=new Date().toLocaleDateString('id-ID');
